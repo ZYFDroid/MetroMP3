@@ -266,6 +266,10 @@ namespace MP3模拟器
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (easterCountdown > 0)
+            {
+                easterCountdown--;
+            }
             if (Program.folders.Count <= 0) { return; }
             lblTime.Text = mPlayer.PlayingPosition.toTimeStr();
             numProgress.Maximum = ((int)mPlayer.TotalPosition.TotalMilliseconds)+1;
@@ -395,6 +399,24 @@ namespace MP3模拟器
             replay();
             locate();
             mPlayer.IsPlaying = p;
+        }
+
+        private void imgAlbum_Click(object sender, EventArgs e)
+        {
+            if (Program.folders.Count <= 0) { return; }
+            locate();
+        }
+
+        int easterCountdown = 0;
+
+        private void imgAlbum_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right) {
+                easterCountdown++;
+                if (easterCountdown > 10) {
+                    imgEasterEgg.Visible = true;
+                }
+            }
         }
     }
 

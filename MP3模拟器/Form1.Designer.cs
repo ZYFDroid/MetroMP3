@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.numProgress = new MetroFramework.Controls.MetroTrackBar();
             this.lblSongName = new MetroFramework.Controls.MetroLabel();
             this.lblArtist = new MetroFramework.Controls.MetroLabel();
@@ -63,8 +63,10 @@
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.btnPrevFolder = new System.Windows.Forms.PictureBox();
-            this.mPlayer = new MP3模拟器.Player();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
+            this.imgEasterEgg = new System.Windows.Forms.PictureBox();
+            this.mPlayer = new MP3模拟器.Player();
             ((System.ComponentModel.ISupportInitialize)(this.numVolume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblFolders)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblSongs)).BeginInit();
@@ -80,6 +82,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPrevFolder)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgEasterEgg)).BeginInit();
             this.SuspendLayout();
             // 
             // numProgress
@@ -92,6 +95,7 @@
             this.numProgress.TabIndex = 1;
             this.numProgress.Text = "metroTrackBar1";
             this.numProgress.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.numProgress.Value = 0;
             this.numProgress.Scroll += new System.Windows.Forms.ScrollEventHandler(this.numProgress_Scroll);
             // 
             // lblSongName
@@ -151,6 +155,7 @@
             // numVolume
             // 
             this.numVolume.AutoSize = false;
+            this.numVolume.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.numVolume.Cursor = System.Windows.Forms.Cursors.Hand;
             this.numVolume.Location = new System.Drawing.Point(396, 68);
             this.numVolume.Maximum = 100;
@@ -158,7 +163,7 @@
             this.numVolume.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.numVolume.Size = new System.Drawing.Size(24, 77);
             this.numVolume.TabIndex = 6;
-            this.numVolume.TickFrequency = 0;
+            this.numVolume.TickFrequency = 10;
             this.numVolume.TickStyle = System.Windows.Forms.TickStyle.None;
             this.numVolume.Value = 100;
             this.numVolume.Visible = false;
@@ -178,14 +183,14 @@
             this.Column3,
             this.Column1,
             this.Column2});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblFolders.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblFolders.DefaultCellStyle = dataGridViewCellStyle2;
             this.tblFolders.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tblFolders.Location = new System.Drawing.Point(23, 219);
             this.tblFolders.MultiSelect = false;
@@ -205,10 +210,10 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle5.NullValue")));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle1.NullValue")));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
             this.Column1.HeaderText = "Column1";
             this.Column1.Image = global::MP3模拟器.Properties.Resources.img_folder;
             this.Column1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
@@ -238,14 +243,14 @@
             this.dataGridViewImageColumn1,
             this.dataGridViewTextBoxColumn1,
             this.Column5});
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.tblSongs.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.tblSongs.DefaultCellStyle = dataGridViewCellStyle4;
             this.tblSongs.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tblSongs.Location = new System.Drawing.Point(139, 219);
             this.tblSongs.MultiSelect = false;
@@ -265,10 +270,10 @@
             // 
             // dataGridViewImageColumn1
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle7.NullValue")));
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = ((object)(resources.GetObject("dataGridViewCellStyle3.NullValue")));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridViewImageColumn1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewImageColumn1.HeaderText = "Column1";
             this.dataGridViewImageColumn1.Image = global::MP3模拟器.Properties.Resources.img_songlist;
             this.dataGridViewImageColumn1.ImageLayout = System.Windows.Forms.DataGridViewImageCellLayout.Zoom;
@@ -302,6 +307,7 @@
             // 
             this.imgAlbum.BackColor = System.Drawing.Color.Black;
             this.imgAlbum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgAlbum.Cursor = System.Windows.Forms.Cursors.Hand;
             this.imgAlbum.Image = ((System.Drawing.Image)(resources.GetObject("imgAlbum.Image")));
             this.imgAlbum.Location = new System.Drawing.Point(23, 66);
             this.imgAlbum.Name = "imgAlbum";
@@ -309,6 +315,8 @@
             this.imgAlbum.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgAlbum.TabIndex = 0;
             this.imgAlbum.TabStop = false;
+            this.imgAlbum.Click += new System.EventHandler(this.imgAlbum_Click);
+            this.imgAlbum.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imgAlbum_MouseDown);
             // 
             // btnVolume
             // 
@@ -320,6 +328,7 @@
             this.btnVolume.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnVolume.TabIndex = 5;
             this.btnVolume.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnVolume, "音量");
             this.btnVolume.Click += new System.EventHandler(this.btnVolume_Click);
             // 
             // btnLoop
@@ -332,6 +341,7 @@
             this.btnLoop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnLoop.TabIndex = 5;
             this.btnLoop.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnLoop, "单曲/目录/全部循环");
             this.btnLoop.Click += new System.EventHandler(this.btnLoop_Click);
             // 
             // btnShuffe
@@ -344,6 +354,7 @@
             this.btnShuffe.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnShuffe.TabIndex = 5;
             this.btnShuffe.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnShuffe, "顺序/随机播放");
             this.btnShuffe.Click += new System.EventHandler(this.btnShuffe_Click);
             // 
             // btnNextFolder
@@ -356,6 +367,7 @@
             this.btnNextFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnNextFolder.TabIndex = 5;
             this.btnNextFolder.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnNextFolder, "下一个目录");
             this.btnNextFolder.Click += new System.EventHandler(this.btnNextFolder_Click);
             // 
             // btnNext
@@ -368,6 +380,7 @@
             this.btnNext.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnNext.TabIndex = 5;
             this.btnNext.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnNext, "下一曲");
             this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // pictureBox9
@@ -390,6 +403,7 @@
             this.btnPlay.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnPlay.TabIndex = 5;
             this.btnPlay.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnPlay, "播放/暂停");
             this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // btnPrev
@@ -402,6 +416,7 @@
             this.btnPrev.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnPrev.TabIndex = 5;
             this.btnPrev.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnPrev, "上一曲");
             this.btnPrev.Click += new System.EventHandler(this.btnPrev_Click);
             // 
             // pictureBox10
@@ -434,13 +449,8 @@
             this.btnPrevFolder.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btnPrevFolder.TabIndex = 5;
             this.btnPrevFolder.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.btnPrevFolder, "上一个目录");
             this.btnPrevFolder.Click += new System.EventHandler(this.btnPrevFolder_Click);
-            // 
-            // mPlayer
-            // 
-            this.mPlayer.onStop += new System.EventHandler<System.EventArgs>(this.mPlayer_onStop);
-            this.mPlayer.onPlayPauseChanged += new System.EventHandler<System.EventArgs>(this.mPlayer_onPlayPauseChanged);
-            this.mPlayer.onInfoLoaded += new System.EventHandler<System.EventArgs>(this.mPlayer_onInfoLoaded);
             // 
             // timer1
             // 
@@ -448,10 +458,36 @@
             this.timer1.Interval = 300;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // metroToolTip1
+            // 
+            this.metroToolTip1.Style = MetroFramework.MetroColorStyle.Purple;
+            this.metroToolTip1.StyleManager = null;
+            this.metroToolTip1.Theme = MetroFramework.MetroThemeStyle.Default;
+            // 
+            // imgEasterEgg
+            // 
+            this.imgEasterEgg.Cursor = System.Windows.Forms.Cursors.No;
+            this.imgEasterEgg.Image = global::MP3模拟器.Properties.Resources.hiresaudio;
+            this.imgEasterEgg.Location = new System.Drawing.Point(23, 17);
+            this.imgEasterEgg.Name = "imgEasterEgg";
+            this.imgEasterEgg.Size = new System.Drawing.Size(42, 42);
+            this.imgEasterEgg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imgEasterEgg.TabIndex = 8;
+            this.imgEasterEgg.TabStop = false;
+            this.metroToolTip1.SetToolTip(this.imgEasterEgg, "究极脑放已开启");
+            this.imgEasterEgg.Visible = false;
+            // 
+            // mPlayer
+            // 
+            this.mPlayer.onStop += new System.EventHandler<System.EventArgs>(this.mPlayer_onStop);
+            this.mPlayer.onPlayPauseChanged += new System.EventHandler<System.EventArgs>(this.mPlayer_onPlayPauseChanged);
+            this.mPlayer.onInfoLoaded += new System.EventHandler<System.EventArgs>(this.mPlayer_onInfoLoaded);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(443, 458);
+            this.Controls.Add(this.imgEasterEgg);
             this.Controls.Add(this.tblSongs);
             this.Controls.Add(this.tblFolders);
             this.Controls.Add(this.imgAlbum);
@@ -477,6 +513,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Resizable = false;
+            this.ShadowType = MetroFramework.Forms.MetroFormShadowType.SystemShadow;
             this.Style = MetroFramework.MetroColorStyle.Purple;
             this.Text = "MP3 Player";
             this.TextAlign = MetroFramework.Forms.MetroFormTextAlign.Center;
@@ -498,6 +535,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnPrevFolder)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgEasterEgg)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -534,6 +572,8 @@
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private MetroFramework.Components.MetroToolTip metroToolTip1;
+        private System.Windows.Forms.PictureBox imgEasterEgg;
     }
 }
 

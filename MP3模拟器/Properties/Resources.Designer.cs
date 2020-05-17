@@ -73,6 +73,16 @@ namespace MP3模拟器.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap hiresaudio {
+            get {
+                object obj = ResourceManager.GetObject("hiresaudio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_folder_next {
             get {
                 object obj = ResourceManager.GetObject("ic_folder_next", resourceCulture);
