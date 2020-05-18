@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace MP3模拟器
 {
@@ -17,10 +18,11 @@ namespace MP3模拟器
     {
         public event EventHandler<EventArgs> onStop;
         public event EventHandler<EventArgs> onPlayPauseChanged;
-        public event EventHandler<EventArgs> onInfoLoaded;
+        public event EventHandler<SongCallbackEventArgs> onInfoLoaded;
+        public event EventHandler<EventArgs> onNewSong;
 
         WaveOut output;
-        AudioFileReader source;
+        public AudioFileReader source;
 
         SongEntry entry;
 
@@ -35,7 +37,11 @@ namespace MP3模拟器
             set
             {
                 entry = value;
-                createPlayer(entry);
+                try
+                {
+                    createPlayer(entry);
+                }
+                catch { throw; }
             }
         }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -182,21 +188,35 @@ namespace MP3模拟器
         private String album;
         private String artist;
         
+        
 
         TimeSpan totalPosition;
 
         void createPlayer(SongEntry entry) {
             tryStop();
-            readSongInfo(entry);
             output = new WaveOut();
             source = new AudioFileReader(entry.Path);
             output.Init(source);
             output.PlaybackStopped += Output_PlaybackStopped;
             totalPosition = source.TotalTime;
             output.Volume = volume / 100f;
-            onInfoLoaded?.Invoke(this, EventArgs.Empty);
             onPlayPauseChanged?.Invoke(this,EventArgs.Empty);
+            clearSongInfo(entry);
+            onInfoLoaded?.Invoke(null, new SongCallbackEventArgs(entry));
+            Task getTask = new Task<SongEntry>(() =>readAsync(entry));
+            getTask.Start();
+            getTask.ContinueWith(t => {
+                onInfoLoaded?.Invoke(null, new SongCallbackEventArgs(entry));
+            });
+            onNewSong?.Invoke(null, EventArgs.Empty);
         }
+
+        SongEntry readAsync(SongEntry entry) {
+            readSongInfo(entry);
+            return entry;
+        }
+
+        
 
         private void Output_PlaybackStopped(object sender, StoppedEventArgs e)
         {
@@ -206,14 +226,19 @@ namespace MP3模拟器
             }
         }
 
-        void readSongInfo(SongEntry entry) {
-            Id3.Mp3 mp3 = new Id3.Mp3(entry.Path, Id3.Mp3Permissions.Read);
-            IEnumerable<Id3.Id3Tag> tags = mp3.GetAllTags();
-            album = "未知专辑";
-            artist = "未知艺术家";
+        void clearSongInfo(SongEntry entry) {
+            album = "";
+            artist = "";
             title = Path.GetFileNameWithoutExtension(entry.Path);
             cover?.Dispose();
             cover = null;
+        }
+
+        void readSongInfo(SongEntry entry) {
+            if(!entry.Path.EndsWith("mp3"))return;
+            Id3.Mp3 mp3 = new Id3.Mp3(entry.Path, Id3.Mp3Permissions.Read);
+            IEnumerable<Id3.Id3Tag> tags = mp3.GetAllTags();
+
 
             artist = "";
 
@@ -262,6 +287,29 @@ namespace MP3模拟器
         private void Player_Disposed(object sender, EventArgs e)
         {
             tryStop();
+        }
+    }
+
+    public class SongCallbackEventArgs : EventArgs
+    {
+        private SongEntry entry;
+
+        public SongCallbackEventArgs(SongEntry entry)
+        {
+            this.entry = entry;
+        }
+
+        public SongEntry Entry
+        {
+            get
+            {
+                return entry;
+            }
+
+            set
+            {
+                entry = value;
+            }
         }
     }
 }

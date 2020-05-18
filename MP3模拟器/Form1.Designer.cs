@@ -481,7 +481,8 @@
             // 
             this.mPlayer.onStop += new System.EventHandler<System.EventArgs>(this.mPlayer_onStop);
             this.mPlayer.onPlayPauseChanged += new System.EventHandler<System.EventArgs>(this.mPlayer_onPlayPauseChanged);
-            this.mPlayer.onInfoLoaded += new System.EventHandler<System.EventArgs>(this.mPlayer_onInfoLoaded);
+            this.mPlayer.onInfoLoaded += new System.EventHandler<MP3模拟器.SongCallbackEventArgs>(this.mPlayer_onInfoLoaded);
+            this.mPlayer.onNewSong += new System.EventHandler<System.EventArgs>(this.mPlayer_onNewSong);
             // 
             // Form1
             // 

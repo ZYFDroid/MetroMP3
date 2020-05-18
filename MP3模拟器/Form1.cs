@@ -155,13 +155,16 @@ namespace MP3模拟器
             {
                 Program.folders.ForEach(f => tblFolders.Rows.Add(f, null, Path.GetFileName(f.Path)));
                 tblFolders[2, Math.Min(mSettingModel.FolderPos, Program.folders.Count)].Selected = true;
-                loadList(Program.folders[Math.Min(mSettingModel.FolderPos, Program.folders.Count)]);
-
+                loadList(Program.folders[Math.Min(mSettingModel.FolderPos, Program.folders.Count-1)]);
+                FolderPos = Math.Min(mSettingModel.FolderPos, Program.folders.Count - 1);
                 List<SongEntry> subSongs = Program.songsInFolder[Program.folders[Math.Min(mSettingModel.FolderPos, Program.folders.Count)]];
-                tblSongs[2, Math.Min(mSettingModel.SongPos, subSongs.Count)].Selected = true;
+                SongPos = Math.Min(mSettingModel.SongPos, subSongs.Count - 1);
+                tblSongs[2, Math.Min(mSettingModel.SongPos, subSongs.Count-1)].Selected = true;
 
-                mPlayer.SongEntry = subSongs[Math.Min(mSettingModel.SongPos, subSongs.Count)];
+                mPlayer.SongEntry = subSongs[Math.Min(mSettingModel.SongPos, subSongs.Count-1)];
                 mPlayer.PlayingPosition = TimeSpan.FromMilliseconds(Math.Min(mPlayer.TotalPosition.TotalMilliseconds, mSettingModel.PlayPos));
+                
+                
             }
 
             numVolume.Value = Volume;
@@ -228,13 +231,28 @@ namespace MP3模拟器
             }
         }
 
-        private void mPlayer_onInfoLoaded(object sender, EventArgs e)
+        private void mPlayer_onInfoLoaded(object sender, SongCallbackEventArgs e)
         {
+            if (InvokeRequired) {
+                BeginInvoke(new Action(() => { loadInfo(e); }));
+                return;
+            }
+            loadInfo(e);
+        }
+
+        void loadInfo(SongCallbackEventArgs e)
+        {
+            SongEntry current = Program.songsInFolder[Program.folders[FolderPos]][SongPos];
+            Console.WriteLine("Load");
+            if (e.Entry != current) { return; }
             lblAlbum.Text = mPlayer.Album;
             lblArtist.Text = mPlayer.Artist;
             lblSongName.Text = mPlayer.Title;
             imgAlbum.Image = mPlayer.Cover == null ? Properties.Resources.default_cover : mPlayer.Cover;
             lblTimeTotal.Text = mPlayer.TotalPosition.toTimeStr();
+
+            
+
         }
 
         Bitmap imgPlay = Properties.Resources.ic_play;
@@ -319,19 +337,19 @@ namespace MP3模拟器
         }
         Random rnd = new Random();
         public void prev() {
-            if (Program.folders.Count <= 0) { return; }
+            if (Program.folders.Count < 0) { return; }
             if (Shuffe) {
                 SongPos =rnd.Next() % Program.songsInFolder[Program.folders[FolderPos]].Count;
                 mPlayer.SongEntry = Program.songsInFolder[Program.folders[FolderPos]][SongPos];
                 return;
             }
             SongPos--;
-            if (SongPos <=0)
+            if (SongPos <0)
             {
                 if (LoopMode != LoopMode.Folder)
                 {
                     FolderPos--;
-                    if (FolderPos <= 0)
+                    if (FolderPos < 0)
                     {
                         FolderPos = Program.folders.Count - 1;
                     }
@@ -417,6 +435,16 @@ namespace MP3模拟器
                     imgEasterEgg.Visible = true;
                 }
             }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void mPlayer_onNewSong(object sender, EventArgs e)
+        {
+            
         }
     }
 

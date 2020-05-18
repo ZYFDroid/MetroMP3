@@ -26,7 +26,7 @@ namespace MP3模拟器
             doScan(Path.GetFullPath("."));
             foreach (SongEntry songEnt in scanedResult)
             {
-                List<String> mp3s = Directory.EnumerateFiles(songEnt.Path, "*.mp3").ToList();
+                List<String> mp3s = searchDir(songEnt.Path,"*.mp3","*.wav","*.wma","*.m4a","*.flac","*.aac");
                 if (mp3s.Count() > 0)
                 {
                     folders.Add(songEnt);
@@ -34,6 +34,15 @@ namespace MP3模拟器
                 }
             }
             Application.Run(new Form1());
+        }
+
+        public static List<String> searchDir(String parent,params String[] patterns) {
+            List<String> l = new List<string>();
+            for (int i = 0; i < patterns.Length; i++)
+            {
+                l.AddRange(Directory.EnumerateFiles(parent, patterns[i]));
+            }
+            return l;
         }
 
         public static void doScan(String root) {
