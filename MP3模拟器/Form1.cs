@@ -141,6 +141,10 @@ namespace MP3模拟器
             }
         }
 
+        public float meter {
+            get { return mPlayer.Peak; }
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
             RegisterHotKey(this.Handle, 2, 0, Keys.MediaPreviousTrack);
@@ -431,7 +435,7 @@ namespace MP3模拟器
         {
             if (e.Button == MouseButtons.Right) {
                 easterCountdown++;
-                if (easterCountdown > 10) {
+                if (easterCountdown > 4) {
                     imgEasterEgg.Visible = true;
                 }
             }
@@ -445,6 +449,11 @@ namespace MP3模拟器
         private void mPlayer_onNewSong(object sender, EventArgs e)
         {
             
+        }
+
+        private void imgEasterEgg_Click(object sender, EventArgs e)
+        {
+            new Form2(this).Show();
         }
     }
 

@@ -10,6 +10,7 @@ using System.IO;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Threading;
+using NAudio.Wave.SampleProviders;
 
 namespace MP3模拟器
 {
@@ -23,8 +24,11 @@ namespace MP3模拟器
 
         WaveOut output;
         public AudioFileReader source;
+        public MeteringSampleProvider meter;
 
         SongEntry entry;
+
+        private float peak = 0;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),Browsable(false),EditorBrowsable(EditorBrowsableState.Never)]
         public SongEntry SongEntry
@@ -158,6 +162,19 @@ namespace MP3模拟器
                 volume = value;
             }
         }
+
+        public float Peak
+        {
+            get
+            {
+                return peak;
+            }
+
+            set
+            {
+                peak = value;
+            }
+        }
         
 
         int volume=100;
@@ -169,6 +186,14 @@ namespace MP3模拟器
                 {
                     output.Dispose();
                     output = null;
+                }
+            }
+            catch { }
+            try
+            {
+                if (null != meter)
+                {
+                    meter = null;
                 }
             }
             catch { }
@@ -196,7 +221,9 @@ namespace MP3模拟器
             tryStop();
             output = new WaveOut();
             source = new AudioFileReader(entry.Path);
-            output.Init(source);
+            meter = new MeteringSampleProvider(source);
+            meter.StreamVolume += Meter_StreamVolume;
+            output.Init(meter);
             output.PlaybackStopped += Output_PlaybackStopped;
             totalPosition = source.TotalTime;
             output.Volume = volume / 100f;
@@ -209,6 +236,11 @@ namespace MP3模拟器
                 onInfoLoaded?.Invoke(null, new SongCallbackEventArgs(entry));
             });
             onNewSong?.Invoke(null, EventArgs.Empty);
+        }
+
+        private void Meter_StreamVolume(object sender, StreamVolumeEventArgs e)
+        {
+            peak = e.MaxSampleValues.Average();
         }
 
         SongEntry readAsync(SongEntry entry) {

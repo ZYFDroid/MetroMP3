@@ -476,9 +476,11 @@
             this.imgEasterEgg.TabStop = false;
             this.metroToolTip1.SetToolTip(this.imgEasterEgg, "究极脑放已开启");
             this.imgEasterEgg.Visible = false;
+            this.imgEasterEgg.Click += new System.EventHandler(this.imgEasterEgg_Click);
             // 
             // mPlayer
             // 
+            this.mPlayer.Peak = 0F;
             this.mPlayer.onStop += new System.EventHandler<System.EventArgs>(this.mPlayer_onStop);
             this.mPlayer.onPlayPauseChanged += new System.EventHandler<System.EventArgs>(this.mPlayer_onPlayPauseChanged);
             this.mPlayer.onInfoLoaded += new System.EventHandler<MP3模拟器.SongCallbackEventArgs>(this.mPlayer_onInfoLoaded);
@@ -567,7 +569,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewImageColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private Player mPlayer;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
@@ -575,6 +576,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private MetroFramework.Components.MetroToolTip metroToolTip1;
         private System.Windows.Forms.PictureBox imgEasterEgg;
+        public Player mPlayer;
     }
 }
 
