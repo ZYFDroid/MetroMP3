@@ -233,8 +233,7 @@ namespace MP3模拟器
 
         public SampleAggregator SpectrumSampler;
 
-        private Complex[] cachefft = new Complex[512];
-        public Complex[] Spectrum { get { return cachefft; } }
+        public float[] Spectrum { get { return SpectrumSampler.Spectrum; } }
 
         void createPlayer(SongEntry entry) {
             tryStop();
@@ -242,7 +241,7 @@ namespace MP3模拟器
             SpectrumSampler = new SampleAggregator(source, 512);
             meter = new BetterMeteringSampleProvider(SpectrumSampler);
             meter.StreamVolume += Meter_StreamVolume;
-            SpectrumSampler.FftCalculated += ((sender, earg) => { System.Array.Copy(earg.Result, cachefft, cachefft.Length); });
+            SpectrumSampler.FftCalculated += ((sender, earg) => { });
             SpectrumSampler.PerformFFT = true;
 
             output = new WaveOut() { DesiredLatency = 1,NumberOfBuffers = meter.WaveFormat.SampleRate / 256 };
@@ -477,6 +476,9 @@ namespace MP3模拟器
         public event EventHandler<FftEventArgs> FftCalculated;
         public bool PerformFFT { get; set; }
         private readonly Complex[] fftBuffer;
+
+        private readonly float[] _spectrum;
+
         private readonly FftEventArgs fftArgs;
         private int fftPos;
         private readonly int fftLength;
@@ -495,7 +497,9 @@ namespace MP3模拟器
             m = (int)Math.Log(fftLength, 2.0);
             this.fftLength = fftLength;
             fftBuffer = new Complex[fftLength];
+            _spectrum = new float[fftLength];
             fftArgs = new FftEventArgs(fftBuffer);
+            downspeed = (1f / source.WaveFormat.SampleRate) * (1f / 0.4f) * fftLength;
             this.source = source;
         }
 
@@ -511,6 +515,8 @@ namespace MP3模拟器
             maxValue = minValue = 0;
         }
 
+        float downspeed=0.01f;
+
         private void Add(float value)
         {
             if (PerformFFT && FftCalculated != null)
@@ -523,6 +529,15 @@ namespace MP3模拟器
                     fftPos = 0;
                     // 1024 = 2^10
                     FastFourierTransform.FFT(true, m, fftBuffer);
+                    for (int i = 0; i < fftBuffer.Length; i++)
+                    {
+                        Complex c = fftBuffer[i];
+                        double intensityDB = 10 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));
+                        double minDB = -50;
+                        if (intensityDB < minDB) intensityDB = minDB;
+                        double percent =- (intensityDB - minDB) / minDB;
+                        _spectrum[i] = (float)Math.Max(_spectrum[i] - downspeed, percent);
+                    }
                     FftCalculated(this, fftArgs);
                 }
             }
@@ -538,6 +553,8 @@ namespace MP3模拟器
         }
 
         public WaveFormat WaveFormat => source.WaveFormat;
+
+        public float[] Spectrum { get => _spectrum;  }
 
         public int Read(float[] buffer, int offset, int count)
         {

@@ -20,15 +20,24 @@ namespace MP3模拟器
             InitializeComponent();
         }
 
-        Pen p = new Pen(Color.White, 1);
+        Pen p = new Pen(Color.FromArgb(192,Color.White), 1);
 
         GdiSystem gdi;
 
         private void FrmFFT_Load(object sender, EventArgs e)
         {
+            this.TopMost = true;
+            Screen curScreen = Screen.FromControl(this);
+            this.Width = curScreen.WorkingArea.Width;
+            this.Left = curScreen.WorkingArea.Left;
+            this.Top = curScreen.WorkingArea.Height - this.Height;
             gdi = new GdiSystem(this);
+            p = new Pen(Color.FromArgb(127, Color.White), this.Width / 256 -1);
+            offset = (this.Width / 256 - 1) / 2;
             timer1.Enabled = true;
         }
+
+        float offset = 0;
 
         Point p0 = Point.Empty;
 
@@ -46,12 +55,12 @@ namespace MP3模拟器
         {
             Graphics g = gdi.Graphics;
             if (null == g) { return; }
-            g.Clear(Color.Black);
-            Complex[] result = parent.mPlayer.Spectrum;
-            for (int i = 0; i < result.Length; i++)
+            g.Clear(Color.Transparent);
+            float[] result = parent.mPlayer.Spectrum;
+            for (int i = 0; i < result.Length / 2; i++)
             {
-                int yval = (int)(Math.Sqrt(result[i].X * result[i].X + result[i].Y * result[i].Y) * 1024);
-                g.DrawLine(p, i, 256, i, 256 - yval);
+                int yval = (int)(result[i] * 192);
+                g.DrawLine(p, i * Width / 256 + offset, 192, i * Width / 256 + offset, 192 - yval);
             }
             gdi.UpdateWindow();
         }
