@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace RetroCPUMeter
+namespace MP3模拟器
 {
 
     public class GdiSystem : IDisposable
@@ -117,7 +117,7 @@ namespace RetroCPUMeter
         private Graphics thisGraphics;
 
 
-        private class Win32
+        public class Win32
         {
             [StructLayout(LayoutKind.Sequential)]
             public struct Size

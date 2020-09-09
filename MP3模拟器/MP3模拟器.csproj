@@ -82,17 +82,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CtlBarMeter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CtlBarMeter.Designer.cs">
+      <DependentUpon>CtlBarMeter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="FrmFFT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="FrmFFT.Designer.cs">
+      <DependentUpon>FrmFFT.cs</DependentUpon>
     </Compile>
     <Compile Include="GdiSystem.cs" />
     <Compile Include="Models.cs" />
@@ -101,11 +107,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CtlBarMeter.resx">
+      <DependentUpon>CtlBarMeter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="FrmFFT.resx">
+      <DependentUpon>FrmFFT.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -174,9 +183,6 @@
     <None Include="Resources\img_song.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\img_default_album.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\img_folder.png" />
   </ItemGroup>
   <ItemGroup>
@@ -184,10 +190,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bitbug_favicon.ico" />
-    <None Include="Resources\shadow.png" />
-    <None Include="Resources\hand.png" />
-    <None Include="Resources\frame.png" />
-    <None Include="Resources\back.png" />
+    <None Include="Resources\bg_meter.png" />
     <None Include="Resources\hiresaudio.png" />
     <None Include="Resources\default_cover.png" />
     <None Include="Resources\bitbug_favicon.ico" />

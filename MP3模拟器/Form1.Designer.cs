@@ -66,6 +66,10 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.metroToolTip1 = new MetroFramework.Components.MetroToolTip();
             this.imgEasterEgg = new System.Windows.Forms.PictureBox();
+            this.potVolume = new NAudio.Gui.Pot();
+            this.animTimer = new System.Windows.Forms.Timer(this.components);
+            this.ctlBarMeter2 = new MP3模拟器.CtlBarMeter();
+            this.ctlBarMeter1 = new MP3模拟器.CtlBarMeter();
             this.mPlayer = new MP3模拟器.Player();
             ((System.ComponentModel.ISupportInitialize)(this.numVolume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblFolders)).BeginInit();
@@ -478,9 +482,50 @@
             this.imgEasterEgg.Visible = false;
             this.imgEasterEgg.Click += new System.EventHandler(this.imgEasterEgg_Click);
             // 
+            // potVolume
+            // 
+            this.potVolume.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.potVolume.Location = new System.Drawing.Point(396, 151);
+            this.potVolume.Maximum = 1D;
+            this.potVolume.Minimum = 0D;
+            this.potVolume.Name = "potVolume";
+            this.potVolume.Size = new System.Drawing.Size(24, 24);
+            this.potVolume.TabIndex = 11;
+            this.metroToolTip1.SetToolTip(this.potVolume, "音量，向上拖动增加");
+            this.potVolume.Value = 1D;
+            this.potVolume.ValueChanged += new System.EventHandler(this.potVolume_ValueChanged);
+            this.potVolume.Load += new System.EventHandler(this.potVolume_Load);
+            // 
+            // animTimer
+            // 
+            this.animTimer.Enabled = true;
+            this.animTimer.Interval = 1;
+            this.animTimer.Tick += new System.EventHandler(this.animTimer_Tick);
+            // 
+            // ctlBarMeter2
+            // 
+            this.ctlBarMeter2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.ctlBarMeter2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ctlBarMeter2.BackgroundImage")));
+            this.ctlBarMeter2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ctlBarMeter2.Location = new System.Drawing.Point(426, 37);
+            this.ctlBarMeter2.Name = "ctlBarMeter2";
+            this.ctlBarMeter2.Size = new System.Drawing.Size(4, 398);
+            this.ctlBarMeter2.TabIndex = 9;
+            this.ctlBarMeter2.Value = 0F;
+            // 
+            // ctlBarMeter1
+            // 
+            this.ctlBarMeter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
+            this.ctlBarMeter1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ctlBarMeter1.BackgroundImage")));
+            this.ctlBarMeter1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ctlBarMeter1.Location = new System.Drawing.Point(13, 37);
+            this.ctlBarMeter1.Name = "ctlBarMeter1";
+            this.ctlBarMeter1.Size = new System.Drawing.Size(4, 398);
+            this.ctlBarMeter1.TabIndex = 9;
+            this.ctlBarMeter1.Value = 0F;
+            // 
             // mPlayer
             // 
-            this.mPlayer.Peak = 0F;
             this.mPlayer.onStop += new System.EventHandler<System.EventArgs>(this.mPlayer_onStop);
             this.mPlayer.onPlayPauseChanged += new System.EventHandler<System.EventArgs>(this.mPlayer_onPlayPauseChanged);
             this.mPlayer.onInfoLoaded += new System.EventHandler<MP3模拟器.SongCallbackEventArgs>(this.mPlayer_onInfoLoaded);
@@ -489,7 +534,10 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(443, 458);
+            this.ClientSize = new System.Drawing.Size(443, 460);
+            this.Controls.Add(this.potVolume);
+            this.Controls.Add(this.ctlBarMeter2);
+            this.Controls.Add(this.ctlBarMeter1);
             this.Controls.Add(this.imgEasterEgg);
             this.Controls.Add(this.tblSongs);
             this.Controls.Add(this.tblFolders);
@@ -577,6 +625,10 @@
         private MetroFramework.Components.MetroToolTip metroToolTip1;
         private System.Windows.Forms.PictureBox imgEasterEgg;
         public Player mPlayer;
+        private CtlBarMeter ctlBarMeter1;
+        private CtlBarMeter ctlBarMeter2;
+        private System.Windows.Forms.Timer animTimer;
+        private NAudio.Gui.Pot potVolume;
     }
 }
 

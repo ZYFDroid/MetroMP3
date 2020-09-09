@@ -141,15 +141,14 @@ namespace MP3模拟器
             }
         }
 
-        public float meter {
-            get { return mPlayer.Peak; }
-        }
+   
 
         private void Form1_Load(object sender, EventArgs e)
         {
             RegisterHotKey(this.Handle, 2, 0, Keys.MediaPreviousTrack);
             RegisterHotKey(this.Handle, 3, 0, Keys.MediaPlayPause);
             RegisterHotKey(this.Handle, 4, 0, Keys.MediaNextTrack);
+
 
             if (File.Exists("config.json")) {
                 mSettingModel = JsonConvert.DeserializeObject<SettingModel>(File.ReadAllText("config.json"));
@@ -173,6 +172,7 @@ namespace MP3模拟器
 
             numVolume.Value = Volume;
             mPlayer.Volume = Volume;
+            potVolume.Value = Volume / 100f;
             LoopMode = LoopMode;
             Shuffe = Shuffe;
 
@@ -453,7 +453,24 @@ namespace MP3模拟器
 
         private void imgEasterEgg_Click(object sender, EventArgs e)
         {
-            new Form2(this).Show();
+            new FrmFFT(this).Show();
+        }
+
+        private void animTimer_Tick(object sender, EventArgs e)
+        {
+            ctlBarMeter1.Value = mPlayer.PeakL;
+            ctlBarMeter2.Value = mPlayer.PeakR;
+        }
+
+        private void potVolume_ValueChanged(object sender, EventArgs e)
+        {
+            numVolume.Value = (int)(potVolume.Value * 100f);
+            mPlayer.Volume = numVolume.Value;
+        }
+
+        private void potVolume_Load(object sender, EventArgs e)
+        {
+
         }
     }
 
