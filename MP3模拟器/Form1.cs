@@ -451,9 +451,19 @@ namespace MP3模拟器
             
         }
 
+        FrmFFT desktopSpectrum = null;
+
         private void imgEasterEgg_Click(object sender, EventArgs e)
         {
-            new FrmFFT(this).Show();
+            if (null == desktopSpectrum)
+            {
+                (desktopSpectrum = new FrmFFT(this)).Show();
+            }
+            else {
+                desktopSpectrum.Close();
+                desktopSpectrum.Dispose();
+                desktopSpectrum = null;
+            }
         }
 
         private void animTimer_Tick(object sender, EventArgs e)

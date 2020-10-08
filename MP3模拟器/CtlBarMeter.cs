@@ -17,6 +17,7 @@ namespace MP3模拟器
             InitializeComponent();
         }
 
+        public const int delayframe = 1;
 
         public override Color BackColor { get => base.BackColor; set { base.BackColor = value; mask.BackColor = value; } }
 
@@ -44,7 +45,7 @@ namespace MP3模拟器
             }
         }
 
-        public float[] valuehistory = new float[19];
+        public float[] valuehistory = new float[delayframe];
         public int ptr = 0;
         private void CtlBarMeter_Load(object sender, EventArgs e)
         {

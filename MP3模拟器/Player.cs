@@ -232,8 +232,8 @@ namespace MP3模拟器
         TimeSpan totalPosition;
 
         public SampleAggregator SpectrumSampler;
-
-        public float[] Spectrum { get { return SpectrumSampler.Spectrum; } }
+        float[] tempspectrum = new float[512];
+        public float[] Spectrum { get { return SpectrumSampler?.Spectrum ?? tempspectrum; } }
 
         void createPlayer(SongEntry entry) {
             tryStop();
@@ -521,7 +521,7 @@ namespace MP3模拟器
         {
             if (PerformFFT && FftCalculated != null)
             {
-                fftBuffer[fftPos].X = (float)(value * FastFourierTransform.HammingWindow(fftPos, fftLength));
+                fftBuffer[fftPos].X = /*value;//*/(float)(value * FastFourierTransform.BlackmannHarrisWindow(fftPos, fftLength));
                 fftBuffer[fftPos].Y = 0;
                 fftPos++;
                 if (fftPos >= fftBuffer.Length)
@@ -532,10 +532,11 @@ namespace MP3模拟器
                     for (int i = 0; i < fftBuffer.Length; i++)
                     {
                         Complex c = fftBuffer[i];
-                        double intensityDB = 10 * Math.Log10(Math.Sqrt(c.X * c.X + c.Y * c.Y));
-                        double minDB = -50;
-                        if (intensityDB < minDB) intensityDB = minDB;
-                        double percent =- (intensityDB - minDB) / minDB;
+                        double intensityDB =(4 + Math.Log(Math.Sqrt(c.X * c.X + c.Y * c.Y),16))/4;
+                        //double minDB = -32;
+                        //if (intensityDB < minDB) intensityDB = minDB;
+                        //double percent =- (intensityDB - minDB) / minDB;
+                        double percent = Math.Max(0,intensityDB); 
                         _spectrum[i] = (float)Math.Max(_spectrum[i] - downspeed, percent);
                     }
                     FftCalculated(this, fftArgs);
